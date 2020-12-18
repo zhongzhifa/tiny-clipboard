@@ -30,7 +30,7 @@ class TinyClipbord {
         document.body.appendChild(this.element)
     }
     public copy(text: string, callback: (err?: Error) => void) {
-        this.element.innerText = text
+        this.element.value = text
         this.element.select();
         if (document.execCommand('copy')) {
             document.execCommand('selectAll');
@@ -40,6 +40,8 @@ class TinyClipbord {
         } else {
             callback && callback(new Error('[tiny-clipbord] copy fail'))
         }
+        // 手机端会聚焦
+        this.element.blur();
     }
     public getHistory() {
         return this.copyList
